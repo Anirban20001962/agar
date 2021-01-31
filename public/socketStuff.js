@@ -1,0 +1,46 @@
+const socket = io();
+function init() {
+    draw();
+    socket.emit('init',{
+        playerName: player.name
+    })
+}
+socket.on('initReturn',(data) => {
+    orbs = data.orbs;
+    setInterval(() => {
+        socket.emit('tick',{
+        xVector: player.xVector,
+        yVector: player.yVector
+    })
+    },33)
+})
+socket.on('tock',(data) => {
+    players = data.players
+}) 
+socket.on('orbSwitch',(data) => {
+    orbs.splice(data.orbIndex,1,data.newOrb);
+})
+socket.on('tickTock',(data) => {
+    player.locX = data.playerX
+    player.locY = data.playerY 
+})
+socket.on('updateLeaderBoard',(data) => {
+    console.log(data);
+    document.querySelector('.leader-board').innerHTML = "";
+    data.forEach(curlElement => {
+        document.querySelector('.leader-board').innerHTML += `
+        <li class="leaderboard-player">${curlElement.name} - ${curlElement.score}</li>
+        `;
+    }); 
+})
+socket.on('playerDeath',(data) => {
+    console.log(`Killed ${data.died}`);
+    console.log(`killer ${data.killedBy}`);
+    document.querySelector('#game-message').innerHTML = `${data.died.name} absorbed by ${data.killedBy.name}`
+    $('#game-message').css({
+        "background-color": "#00e6e6",
+        "opacity": 1
+    });
+    $('#game-message').show();
+    $('#game-message').fadeOut(5000);
+})

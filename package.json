@@ -1,0 +1,20 @@
+{
+  "name": "agar.io",
+  "version": "1.0.0",
+  "description": "My personal project do not copy my code if done legal action will be taken",
+  "main": "index.js",
+  "author": "Jattu Engineer",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "socket.io": "^3.1.0",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
